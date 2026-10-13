@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protótipo - Nossa Empresa com Logo</title>
+    <style>
+        /* Paleta Dark Mode Elegante */
+        :root {
+            --bg-fundo: #0a192f;       /* Azul escuro profundo (fundo principal) */
+            --bg-card: #112240;        /* Azul escuro médio para destacar containers */
+            --texto-principal: #f8fafc;/* Quase branco para leitura impecável */
+            --texto-suave: #94a3b8;    /* Azul acinzentado claro para textos secundários */
+            --azul-claro: #38bdf8;     /* Azul claro neon/brilhante para destaques */
+            --vermelho: #ef4444;       /* Vermelho vibrante para atenção */
+            --vermelho-hover: #dc2626;
+        }
+
+        /* Configurações gerais */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-fundo);
+            color: var(--texto-principal);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        /* Container para alinhar Logo + Texto à esquerda */
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Estilização da imagem do Logo */
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--texto-principal);
+            letter-spacing: 0.5px;
+        }
+
+        .menu-btn {
+            background-color: var(--vermelho);
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            background-color: var(--vermelho-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Barra Lateral (Sidebar) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 260px;
+            height: 100vh;
+            background-color: var(--bg-card);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            z-index: 1000;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar.active {
+            right: 0; 
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--texto-suave);
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-align: right;
+            width: 100%;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--vermelho);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }
+
+        .sidebar ul li a {
+            color: var(--texto-principal);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--azul-claro);
+            transform: translateX(5px);
+        }
+
+        /* Conteúdo Principal */
+        .container {
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h2 {
+            font-size: 2.4rem;
+            margin-top: 0;
+            color: var(--texto-principal);
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: var(--texto-suave);
+        }
+
+        /* Botões */
+        .botoes-acao {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            padding: 16px 24px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-azul {
+            background-color: var(--azul-claro);
+            color: #0f172a;
+        }
+
+        .btn-vermelho {
+            background-color: var(--vermelho);
+            color: #ffffff;
+        }
+
+        .btn-ia {
+            background: transparent;
+            color: var(--azul-claro);
+            border: 2px solid var(--azul-claro);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0.95;
+        }
+
+        /* Imagem sem borda */
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 12px;
+            border: none;       /* Borda removida */
+            box-shadow: none;   /* Sombra/brilho removidos */
+        }
+
+        .hero-image p {
+            font-weight: 600;
+            color: var(--vermelho);
+            margin-top: 15px;
+        }
+
+        /* Planos de Contrato */
+        .planos {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .planos h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--texto-principal);
+        }
+
+        .planos-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .plano-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 35px 25px;
+            width: 270px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .plano-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--azul-claro);
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .plano-card h3 {
+            color: var(--vermelho);
+            font-size: 1.6rem;
+            margin-top: 0;
+        }
+
+        .plano-card p {
+            color: var(--texto-suave);
+            line-height: 1.5;
+        }
+
+        .plano-card .preco {
+            color: var(--azul-claro);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="mini_logo.png" alt="Logo" class="logo-img">
+            <h1>Bússola RH</h1>
+        </div>
+        
+        <button class="menu-btn" onclick="toggleSidebar()">☰ Menu</button>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <ul>
+            <li><a href="#">👤 Login / Minha Conta</a></li>
+            <li><a href="#">💬 Chat</a></li>
+            <li><a href="#">📞 Contatos</a></li>
+            <li><a href="#">📄 Termos de Uso</a></li>
+            <li><a href="#">❓ Dúvidas Gerais</a></li>
+        </ul>
+    </aside>
+
+    <main class="container">
+        
+        <section class="hero">
+            <div class="hero-text">
+                <h2>Transformando sua gestão empresarial</h2>
+                <p>Este é um texto de exemplo. Aqui vai entrar a descrição da sua empresa. Você pode explicar os benefícios dos seus serviços, o que vocês resolvem no mercado e os motivos que fazem vocês serem a melhor escolha para o cliente.</p>
+                
+                <div class="botoes-acao">
+                    <button class="btn btn-azul">Entrar em contato para consulta</button>
+                    <button class="btn btn-vermelho">Buscar soluções</button>
+                    <button class="btn btn-ia" onclick="alert('Aqui abrirá a lista de dados sobre a empresa (satisfação, etc) para a IA processar!')">✨ Utilizar a Inteligência Artificial</button>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="logo.jpeg" alt="Foto do Arrocha">
+            </div>
+        </section>
+
+        <section class="planos">
+            <h2>Nossos Planos de Contrato</h2>
+            <div class="planos-grid">
+                
+                <div class="plano-card">
+                    <h3>Plano Inicial</h3>
+                    <p>Texto de exemplo. Ideal para empresas que estão começando e precisam do básico para alavancar.</p>
+                    <div class="preco">R$ 99<span style="font-size: 1rem;">/mês</span></div>
+                </div>
+
+                <div class="plano-card">
+                    <h3>Plano Arrocha Master</h3>
+                    <p>Texto de exemplo. O pacote completo com direito a suporte total, uso livre da IA e muito mais encanto.</p>
+                    <div class="preco">R$ 299<span style="font-size: 1rem;">/mês</span></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
